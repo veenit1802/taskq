@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
-from .form import FormSetup
+from .form import TaskForm
+
 
 def login_form(request):
     """
@@ -107,7 +108,7 @@ def home(request):
     :return: render
     :Method allowed: GET
     """
-    data = FormSetup()
+    data = TaskForm()
     return render(request, 'home.html', {"task_create_form": data})
 
 
@@ -120,7 +121,6 @@ def home_save_data(request):
     :Method allowed: POST
     """
     if request.method == "POST":
-        data = request.POST
-        obj = FormSetup(data)
+        obj = TaskForm(request.POST)
         obj.save()
     return HttpResponseRedirect('/home')
